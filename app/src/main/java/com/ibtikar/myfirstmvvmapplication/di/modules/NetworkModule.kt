@@ -5,7 +5,6 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.ibtikar.myfirstmvvmapplication.BuildConfig
-import com.ibtikar.myfirstmvvmapplication.activities.mainActivity.mvvm.retrofit.MainApi
 import com.ibtikar.myfirstmvvmapplication.di.scopes.ApplicationScope
 import com.ibtikar.myfirstmvvmapplication.utils.BooleanAsIntAdapter
 import com.ibtikar.myfirstmvvmapplication.utils.CacheUtils

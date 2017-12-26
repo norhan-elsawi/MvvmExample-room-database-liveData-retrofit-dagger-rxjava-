@@ -1,6 +1,7 @@
 package com.ibtikar.myfirstmvvmapplication.activities.mainActivity.mvvm
 
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.ibtikar.myfirstmvvmapplication.BR
 import com.ibtikar.myfirstmvvmapplication.R
+import com.ibtikar.myfirstmvvmapplication.activities.detailsActivity.mvvm.DetailsActivity
 import com.ibtikar.myfirstmvvmapplication.activities.mainActivity.di.DaggerMainComponent
 import com.ibtikar.myfirstmvvmapplication.activities.mainActivity.di.MainModule
 import com.ibtikar.myfirstmvvmapplication.di.Injector
@@ -18,11 +20,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() ,MainContract.View{
 
 
     @Inject
-    lateinit var mainViewModel: MainViewModel
+    lateinit var mainViewModel: MainContract.ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,12 @@ class MainActivity : AppCompatActivity() {
          val viewDataBinding: ViewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewDataBinding.setVariable(BR.viewModel,mainViewModel)
         callData()
+
+        button.setOnClickListener { _ ->
+            val intent = Intent(this, DetailsActivity::class.java)
+            startActivity(intent)
+
+        }
     }
 
     private fun callData() {

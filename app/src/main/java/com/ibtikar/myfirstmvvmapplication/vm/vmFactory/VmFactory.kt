@@ -6,9 +6,12 @@ import com.ibtikar.myfirstmvvmapplication.di.scopes.ApplicationScope
 import javax.inject.Inject
 import javax.inject.Provider
 
-
 @ApplicationScope
-class VmFactory @Inject constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) : ViewModelProvider.Factory {
+class VmFactory @Inject constructor(): ViewModelProvider.Factory {
+
+
+    @Inject
+    lateinit var creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         var creator: Provider<out ViewModel>? = creators[modelClass]

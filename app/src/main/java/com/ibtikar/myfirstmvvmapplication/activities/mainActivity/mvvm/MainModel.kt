@@ -14,10 +14,10 @@ import javax.inject.Inject
 
 
 class MainModel @Inject constructor(var dataManager: DataManager, var itemDao: ItemDao,
-                                    var mainApi: MainApi) {
+                                    var mainApi: MainApi) :MainContract.Model{
 
 
-    fun getItems(): Completable {
+    override fun getItems(): Completable {
         return mainApi.getItemList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -43,7 +43,7 @@ class MainModel @Inject constructor(var dataManager: DataManager, var itemDao: I
 
     }
 
-    fun loadItemsFromDataBase(): LiveData<List<Item>> {
+   override fun loadItemsFromDataBase(): LiveData<List<Item>> {
         return itemDao.getAllItems()
     }
 

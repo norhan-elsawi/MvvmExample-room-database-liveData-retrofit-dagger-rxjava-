@@ -9,18 +9,19 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 
-class MainViewModel @Inject constructor(var model: MainModel) : ViewModel() {
+class MainViewModel @Inject constructor(var model: MainContract.Model) : ViewModel(), MainContract.ViewModel {
 
     val baz = ObservableField<String>()
+
     init {
         baz.set("logayn")
     }
 
-    fun callDataFromApi(): Completable {
+    override fun callDataFromApi(): Completable {
         return model.getItems()
     }
 
-    fun loadItemsFromDb(): LiveData<List<Item>> {
+    override fun loadItemsFromDb(): LiveData<List<Item>> {
         Handler().postDelayed({
             baz.set("nour")
         }, 3000)

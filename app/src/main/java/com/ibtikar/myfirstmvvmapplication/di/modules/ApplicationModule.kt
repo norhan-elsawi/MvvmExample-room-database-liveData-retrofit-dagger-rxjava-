@@ -4,7 +4,6 @@ import android.app.Application
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.SharedPreferences
-import com.ibtikar.myfirstmvvmapplication.activities.mainActivity.mvvm.retrofit.MainApi
 import com.ibtikar.myfirstmvvmapplication.di.scopes.ApplicationScope
 import com.ibtikar.myfirstmvvmapplication.model.localDataProvider.DataManager
 import com.ibtikar.myfirstmvvmapplication.model.localDataProvider.PrefHelper
@@ -14,11 +13,9 @@ import com.ibtikar.myfirstmvvmapplication.utils.Constants
 import com.ibtikar.myfirstmvvmapplication.vm.vmModule.ViewModelModule
 import dagger.Module
 import dagger.Provides
-import retrofit2.Retrofit
-import javax.inject.Named
 
 
-@Module(includes =arrayOf(ViewModelModule::class))
+@Module(includes = arrayOf(ViewModelModule::class))
 class ApplicationModule(var mApplication: Application) {
 
     @Provides
@@ -64,11 +61,6 @@ class ApplicationModule(var mApplication: Application) {
     @Provides
     fun provideItemDao(db: AppDatabase): ItemDao {
         return db.itemDao()
-    }
-
-    @Provides
-    fun getMainApi(retrofit: Retrofit): MainApi {
-        return retrofit.create<MainApi>(MainApi::class.java)
     }
 
 
