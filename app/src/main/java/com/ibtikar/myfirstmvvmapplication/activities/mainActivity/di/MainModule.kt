@@ -1,6 +1,7 @@
 package com.ibtikar.myfirstmvvmapplication.activities.mainActivity.di
 
 import android.app.Activity
+import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.FragmentActivity
@@ -10,11 +11,14 @@ import com.ibtikar.myfirstmvvmapplication.activities.mainActivity.mvvm.MainModel
 import com.ibtikar.myfirstmvvmapplication.activities.mainActivity.mvvm.MainViewModel
 import com.ibtikar.myfirstmvvmapplication.activities.mainActivity.mvvm.retrofit.MainApi
 import com.ibtikar.myfirstmvvmapplication.di.scopes.ActivityScope
+import com.ibtikar.myfirstmvvmapplication.vm.vmModule.ViewModelKey
+import com.ibtikar.myfirstmvvmapplication.vm.vmModule.ViewModelModule
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
 
-@Module
+@Module(includes = arrayOf(ViewModelModule::class))
 class MainModule(var activity: Activity) {
 
     @Provides
@@ -35,11 +39,17 @@ class MainModule(var activity: Activity) {
         return mainModel
     }
 
+    @Provides
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    fun bindMainViewModel(mainViewModel: MainViewModel): ViewModel {
+        return mainViewModel
+    }
+
 
     @Provides
     @ActivityScope
     fun provideMainViewModel(activity: FragmentActivity, vmFactory: ViewModelProvider.Factory): MainContract.ViewModel {
-        Log.e("main factory", vmFactory.toString())
         return ViewModelProviders.of(activity, vmFactory).get(MainViewModel::class.java)
     }
 

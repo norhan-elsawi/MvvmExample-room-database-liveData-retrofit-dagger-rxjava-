@@ -1,6 +1,5 @@
 package com.ibtikar.myfirstmvvmapplication.di.component
 
-import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.google.gson.Gson
 import com.ibtikar.myfirstmvvmapplication.di.modules.ApplicationModule
@@ -27,8 +26,4 @@ interface ApplicationComponent {
     fun provideRetrofit(): Retrofit
 
     fun provideGson(): Gson
-
-    fun provideVmFactory(): ViewModelProvider.Factory
-
-
 }

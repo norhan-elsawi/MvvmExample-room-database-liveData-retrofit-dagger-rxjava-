@@ -1,19 +1,22 @@
 package com.ibtikar.myfirstmvvmapplication.activities.detailsActivity.di
 
 import android.app.Activity
+import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.FragmentActivity
-import android.util.Log
 import com.ibtikar.myfirstmvvmapplication.activities.detailsActivity.mvvm.DetailsContract
 import com.ibtikar.myfirstmvvmapplication.activities.detailsActivity.mvvm.DetailsModel
 import com.ibtikar.myfirstmvvmapplication.activities.detailsActivity.mvvm.DetailsViewModel
 import com.ibtikar.myfirstmvvmapplication.di.scopes.ActivityScope
+import com.ibtikar.myfirstmvvmapplication.vm.vmModule.ViewModelKey
+import com.ibtikar.myfirstmvvmapplication.vm.vmModule.ViewModelModule
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.IntoMap
 
 
-@Module
+@Module(includes = arrayOf(ViewModelModule::class))
 class DetailsModule(var activity: Activity) {
 
     @Provides
@@ -28,11 +31,17 @@ class DetailsModule(var activity: Activity) {
         return detailsModel
     }
 
+    @Provides
+    @IntoMap
+    @ViewModelKey(DetailsViewModel::class)
+    fun bindDetailsViewModel(detailsViewModel: DetailsViewModel): ViewModel {
+        return detailsViewModel
+    }
+
 
     @Provides
     @ActivityScope
     fun provideDetailsViewModel(activity: FragmentActivity, vmFactory: ViewModelProvider.Factory): DetailsContract.ViewModel {
-        Log.e("details factory", vmFactory.toString())
         return ViewModelProviders.of(activity, vmFactory).get(DetailsViewModel::class.java)
     }
 

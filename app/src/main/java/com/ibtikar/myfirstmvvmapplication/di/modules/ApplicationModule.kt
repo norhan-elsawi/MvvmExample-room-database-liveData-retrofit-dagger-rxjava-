@@ -10,12 +10,11 @@ import com.ibtikar.myfirstmvvmapplication.model.localDataProvider.PrefHelper
 import com.ibtikar.myfirstmvvmapplication.model.roomDatabase.appDatabase.AppDatabase
 import com.ibtikar.myfirstmvvmapplication.model.roomDatabase.dao.ItemDao
 import com.ibtikar.myfirstmvvmapplication.utils.Constants
-import com.ibtikar.myfirstmvvmapplication.vm.vmModule.ViewModelModule
 import dagger.Module
 import dagger.Provides
 
 
-@Module(includes = arrayOf(ViewModelModule::class))
+@Module
 class ApplicationModule(var mApplication: Application) {
 
     @Provides

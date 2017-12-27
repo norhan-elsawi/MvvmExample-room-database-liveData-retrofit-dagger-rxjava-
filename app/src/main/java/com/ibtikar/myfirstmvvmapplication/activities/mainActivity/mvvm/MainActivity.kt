@@ -6,12 +6,14 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.ibtikar.myfirstmvvmapplication.BR
 import com.ibtikar.myfirstmvvmapplication.R
 import com.ibtikar.myfirstmvvmapplication.activities.detailsActivity.mvvm.DetailsActivity
 import com.ibtikar.myfirstmvvmapplication.activities.mainActivity.di.DaggerMainComponent
 import com.ibtikar.myfirstmvvmapplication.activities.mainActivity.di.MainModule
+import com.ibtikar.myfirstmvvmapplication.activities.mainActivity.mvvm.adapters.ItemsAdapter
 import com.ibtikar.myfirstmvvmapplication.di.Injector
 import com.ibtikar.myfirstmvvmapplication.di.component.ApplicationComponent
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,11 +36,6 @@ class MainActivity : AppCompatActivity() ,MainContract.View{
         viewDataBinding.setVariable(BR.viewModel,mainViewModel)
         callData()
 
-        button.setOnClickListener { _ ->
-            val intent = Intent(this, DetailsActivity::class.java)
-            startActivity(intent)
-
-        }
     }
 
     private fun callData() {
@@ -50,11 +47,9 @@ class MainActivity : AppCompatActivity() ,MainContract.View{
                 .subscribe()
 
         mainViewModel?.loadItemsFromDb()?.observe(this, Observer { list ->
-            text.append("\n \n in main activity ${list?.size}\n \n ")
-            for (i in list!!.listIterator()) {
-                text.append("${i.itemName} \n")
-            }
-
+            recycler_view.layoutManager = LinearLayoutManager(this)
+            recycler_view.hasFixedSize()
+            recycler_view.adapter = ItemsAdapter(list!!)
         })
 
     }
